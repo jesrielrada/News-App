@@ -18,12 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.prometheus_service.midas.newsapp.MainViewModel
 
 
-@Preview
 @Composable
 fun NewsScreen(
+    navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -31,19 +32,21 @@ fun NewsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .background(Color.White)
+            .background(Color(0xffFAF9F6))
+            .padding(bottom = 8.dp)
     ) {
         Text(
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(bottom = 12.dp, start = 16.dp),
+                .padding(start = 16.dp, top = 16.dp),
             text = "Today's Headlines",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.background(Color(0xffFAF9F6))
+        ) {
             state.newsArticles?.let {
                 items(it) { article ->
                     NewsItem(
@@ -51,7 +54,9 @@ fun NewsScreen(
                         modifier = Modifier
                             .wrapContentSize()
                             .clickable {
-
+                                val author = article.author
+                                val publishDate = article.publishedAt
+                                navController.navigate("article_info/$author/$publishDate")
                             })
 
                 }

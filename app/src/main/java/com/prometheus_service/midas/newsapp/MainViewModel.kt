@@ -22,6 +22,10 @@ class MainViewModel @Inject constructor(
     private val _state = mutableStateOf(NewsState())
     val state : State<NewsState> = _state
 
+    init {
+        loadNewsHeadlines("us")
+    }
+
 
     fun loadNewsHeadlines(country: String) {
         viewModelScope.launch(dispatcherProvider.io) {
