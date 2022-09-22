@@ -11,7 +11,6 @@ class DefaultMainRepository @Inject constructor(
     private val api: NewsApi
 ): MainRepository {
     override suspend fun getHeadlines(
-        apiKey: String,
         country: String
     ): Resource<NewsHeadlinesResponse> {
         return try {
